@@ -1,0 +1,26 @@
+﻿@model IEnumerable<QuanLyDoLuuNiem.Models.product>
+
+@{
+    ViewBag.Title = "Product";
+
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+
+<h2 class="my-5">Sản phẩm</h2>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-4" id="product">
+
+            <div class="card box-shadown mx-0" >
+                <img class="card-img-top" style="object-fit: contain; width: 18rem;" src="@Url.Content("~/Content/Images/" + item.image)" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title"><span id="Ten">@item.name</span></h5>
+                    <p class="card-text"><span id="Giaban">@item.price</span></p>
+                    <a class="btn btn-success" href="@Url.Action("AddToCart", "Cart", new { id = item.id})">Đặt hàng</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

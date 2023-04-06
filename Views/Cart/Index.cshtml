@@ -1,0 +1,86 @@
+﻿@model IEnumerable<QuanLyDoLuuNiem.Models.Cart>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Giỏ hàng</h2>
+
+@if (Model == null)
+{
+    <h5>Giỏ hàng rỗng!</h5>
+}
+else
+{
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.quantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Total)
+        </th>
+        <th></th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Total)
+            </td>
+            <td>
+                @using (Html.BeginForm("Update", "Cart", new { @id = item.id }))
+                {
+                    <input type="hidden" name="id" value="@item.id" />
+                    <input type="number" name="quantity" value="@item.quantity" />
+                    <button type="submit" class="btn btn-primary btn-sm">Cập nhật</button>
+                }
+            </td>
+            <td> 
+                <a 
+                    href="@Url.Action("RemoveItem", new { id = item.id })" 
+                    onclick="return confirm('Bạn có muốn xóa sản phẩm khỏi giỏ hàng không?');"
+                    class="btn btn-danger btn-sm"
+                >
+                    Xoá
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="text-right">Tổng số lượng</td>
+            <td> @Model.Sum(m => m.quantity)</td>
+            <td class="text-right">Tổng thành tiền</td>
+            <td>@Model.Sum(m => m.Total).ToString("#,##0").Replace(',', '.') VNĐ</td>
+        </tr>
+    }
+
+</table>
+<div class="col-xs-12 col-md-6">
+    <a class="btn btn-success" href="@Url.Action("CheckOut", "Cart")">Đặt hàng</a>
+</div>
+}

@@ -1,0 +1,40 @@
+﻿@model IEnumerable<QuanLyDoLuuNiem.Models.product>
+@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+
+<div id="content">
+    <div class="row">
+        <div class="jumbotron p-3 p-md-5 bg-dark text-white">
+            <div class="col-12 px-0">
+                <h1 class="display-4 font-italic">Shop bán đồ lưu niệm</h1>
+                <p class="lead my-3">Multiple lines of text that form the lede, informing new readers quickly and efficiently about what's most interesting in this post's contents.</p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+
+        <h3>Sản phẩm</h3>
+        @{ int i = 0;}
+        @foreach (var item in Model)
+        {
+            i++;
+            <div class="col-3" id="product">
+
+                <div class="card box-shadown" style="width: 18rem;">
+                    <img class="card-img-top" style="object-fit: contain; width: 18rem;" src="@Url.Content("~/Content/Images/" + item.image)" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title"><span id="Ten">@item.name</span></h5>
+                        <p class="card-text"><span id="Giaban">@item.price</span></p>
+                        <a class="btn btn-success" href="@Url.Action("AddToCart", "Cart", new { id = item.id})">Đặt hàng</a>
+                    </div>
+                </div>
+            </div>
+            if (i % 3 == 0)
+            { <div style="clear:both;"></div>
+            }
+        }
+    </div>
+
+</div>
